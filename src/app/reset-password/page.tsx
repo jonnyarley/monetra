@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useState, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
@@ -10,10 +11,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  
+
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -34,7 +35,7 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     if (formData.password !== formData.confirmPassword) {
       toast.error("As senhas não coincidem")
       return
@@ -71,7 +72,6 @@ export default function ResetPasswordPage() {
       setIsSuccess(true)
       toast.success("Senha redefinida com sucesso!")
 
-      // Redirect to login after 3 seconds
       setTimeout(() => {
         router.push("/")
       }, 3000)
@@ -184,8 +184,8 @@ export default function ResetPasswordPage() {
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700"
                 disabled={isLoading}
               >
@@ -199,5 +199,26 @@ export default function ResetPasswordPage() {
         </Card>
       </motion.div>
     </div>
+  )
+}
+
+function ResetPasswordLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center animate-pulse shadow-lg shadow-amber-500/20">
+          <img src="/logo-small.svg" alt="Monetra" className="w-12 h-12" />
+        </div>
+        <p className="text-muted-foreground">Carregando...</p>
+      </div>
+    </div>
+  )
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordContent />
+    </Suspense>
   )
 }
