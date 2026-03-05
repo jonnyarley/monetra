@@ -2,29 +2,13 @@
   "name": "monetra",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "20.x"
-  },
   "scripts": {
-    "dev": "next dev -p 3000 2>&1 | tee dev.log",
-    "prebuild": "bash scripts/prebuild.sh",
-    "build": "next build",
-    "postinstall": "prisma generate",
+    "dev": "next dev",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "db:push": "prisma db push",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:prod": "prisma migrate deploy",
-    "db:reset": "prisma migrate reset",
-    "db:studio": "prisma studio",
-    "cap:sync": "cap sync",
-    "cap:android": "cap add android",
-    "cap:ios": "cap add ios",
-    "cap:open:android": "cap open android",
-    "cap:open:ios": "cap open ios",
-    "build:android": "next build && cap sync android",
-    "build:ios": "next build && cap sync ios"
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@capacitor/android": "^8.1.0",
