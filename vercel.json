@@ -6,6 +6,7 @@
   "framework": "nextjs",
   "regions": ["gru1"],
   "buildCache": false,
+  "cleanDist": true,
   "functions": {
     "src/app/api/**/*.ts": {
       "maxDuration": 30
