@@ -5,6 +5,7 @@
   "installCommand": "bun install",
   "framework": "nextjs",
   "regions": ["gru1"],
+  "buildCache": false,
   "functions": {
     "src/app/api/**/*.ts": {
       "maxDuration": 30
