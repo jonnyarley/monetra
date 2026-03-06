@@ -47,12 +47,9 @@ function addSecurityHeaders(response: NextResponse) {
   response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
   
   // Content-Security-Policy - Política de segurança de conteúdo
-  // Em desenvolvimento, usamos uma política mais permissiva
-  const isDev = process.env.NODE_ENV === "development"
-  const csp = isDev
-    ? "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:;"
-    : "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';"
-  
+  // Permissiva para funcionar com Next.js 16 e Vercel
+  const csp = "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://vercel.live wss://vercel.live; frame-src 'self' https://vercel.live;"
+
   response.headers.set("Content-Security-Policy", csp)
   
   // Strict-Transport-Security (HSTS) - Force HTTPS (apenas em produção)
